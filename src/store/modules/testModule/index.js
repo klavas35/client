@@ -4,7 +4,8 @@ import getters from "./getters.js";
 export default {
     state() {
         return {
-            isLogged: false
+            isLogged: false,
+            isValid:{}
         }
     },
     mutations,

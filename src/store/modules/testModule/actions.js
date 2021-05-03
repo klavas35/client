@@ -8,7 +8,7 @@ export default {
             userAge: payload.age,
             email: payload.email,
             password: payload.password,
-            type: 'teste',
+            type: 'test',
         }
         const response = await axios({
             url: localUrl + '/register',
@@ -69,4 +69,7 @@ export default {
                 throw error
             } }).catch((error) => console.log(error))
     },
+    passworValidation(context, payload) {
+        context.commit('validator', payload)
+    }
 }
