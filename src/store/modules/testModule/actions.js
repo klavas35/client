@@ -61,6 +61,7 @@ export default {
             withCredentials: true
 
         }).then(async (response) => {
+            console.log(`this is response.data ${JSON.stringify(response.data)}`);
             await store.dispatch('isLogged')
             if (response.data === 'error') {
                 const error = new Error(JSON.stringify(response.data) || 'something is wrong')
