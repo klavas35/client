@@ -1,6 +1,6 @@
 import axios from 'axios'
-const url = 'http://localhost:3000/post'
-// const url = 'https://vue-serve-test.herokuapp.com/post'
+// const url = 'http://localhost:3000/post'
+const url = 'https://vue-serve-test.herokuapp.com/post'
 export default {
     async getPosts(context) {
         await axios({

@@ -2,8 +2,8 @@ import {
     io
 } from "socket.io-client";
 import store from './store/index.js'
-// const URL = "https://vue-serve-test.herokuapp.com";
-const URL = "http://localhost:3000";
+const URL = "https://vue-serve-test.herokuapp.com";
+// const URL = "http://localhost:3000";
 // const socket = io(URL, 
 //     {
 //         autoConnect: true,

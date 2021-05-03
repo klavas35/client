@@ -1,7 +1,7 @@
 import axios from 'axios'
 import router from '../../../router/index.js'
-const url = 'http://localhost:3000/comment'
-// const url = 'https://vue-serve-test.herokuapp.com/comment'
+// const url = 'http://localhost:3000/comment'
+const url = 'https://vue-serve-test.herokuapp.com/comment'
 export default {
     async clearCrumbs(context) {
         context.commit('clearCache')
