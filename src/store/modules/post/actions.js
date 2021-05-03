@@ -1,11 +1,10 @@
 import axios from 'axios'
-// const url = 'http://localhost:3000/post'
-const url = 'https://vue-serve-test.herokuapp.com/post'
+const url = process.env.VUE_APP_SERVER_URL + '/post'
 export default {
     async getPosts(context) {
         await axios({
             url: url + '/getposts',
-            method:'GET',
+            method: 'GET',
         }).then((response) => {
             context.commit('post', response.data)
         }).catch((err) => {
@@ -19,7 +18,7 @@ export default {
                 url: url + '/getpost',
                 method: 'POST',
                 data: {
-                    postId:payload
+                    postId: payload
                 }
             }).then((response) => {
                 context.commit('currentPost', response.data)
@@ -43,5 +42,5 @@ export default {
     clearPost(context) {
         context.commit('clearCache')
     }
-    
+
 }

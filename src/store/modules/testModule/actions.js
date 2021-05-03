@@ -1,7 +1,6 @@
 import axios from 'axios'
 import store from '../..'
-// const localUrl = 'http://localhost:3000/users'
-const localUrl = 'https://vue-serve-test.herokuapp.com/users'
+const localUrl = process.env.VUE_APP_SERVER_URL + '/users'
 export default {
     async registerUser(context, payload) {
         const user = {
