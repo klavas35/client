@@ -50,6 +50,7 @@ export default {
         })
     },
     async login(context, payload) {
+        console.log('@login');
         await axios({
             url: localUrl + '/login',
             method: 'POST',
