@@ -4,14 +4,12 @@
     <transition name="dialogTransitation">
       <dialog open v-if="show">
         <header>
-          <h2>LOGIN</h2>
           <slot name="header">
             <h2>{{ title }}</h2>
           </slot>
         </header>
         <section>
           <slot>
-          <p class="message">{{defMessage}}</p>
             <form @submit.prevent="">
               <div class="contain-input">
                 <div>
@@ -63,26 +61,6 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { ref } from "vue";
 export default {
-    props: {
-    show: {
-      type: Boolean,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: false,
-    },
-    fixed: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    message:{
-      type:String,
-      required:false,
-      default:null
-    }
-  },
   setup(props, { emit }) {
     const router = useRouter();
     const store = useStore();
@@ -90,7 +68,6 @@ export default {
       name: "",
       password: "",
     });
-    const defMessage = ref(props.message || 'Default message')
     const errorHandle = ref(false);
     const login = async () => {
       if (user.value.name !== "" && user.value.password !== "") {
@@ -116,10 +93,23 @@ export default {
       user,
       login,
       errorHandle,
-      defMessage
     };
   },
-
+  props: {
+    show: {
+      type: Boolean,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: false,
+    },
+    fixed: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
   emits: ["close"],
   methods: {
     tryClose() {
@@ -156,9 +146,6 @@ dialog {
   margin: 0;
   overflow: hidden;
   background-color: #ddb892;
-}
-.message{
-  margin: 3%;
 }
 p {
   color: red;

@@ -1,53 +1,71 @@
 <template>
-<section>
-  <base-login :show="status" @close="login"></base-login>
-  <header>
-    <nav>
-      <h1>
-        <base-button link to="/">Home Page {{ isLogged }}</base-button>
-      </h1>
-      <ul v-if="!hamburgerStatus">
-        <li>
-          <base-button link to="/about">About</base-button>
-        </li>
-        <li>
-          <base-button v-if="!isLogged" link to="/register">Register</base-button>
-        </li>
-        <li>
-          <base-button link to="/">&#x2b;</base-button>
-        </li>
-      </ul>
-      <div class="nav-mobile">
-        <div class="profile" :class="{image:isLogged}">
-          <base-button navBar v-if="!isLogged" @click="login"
-            >Login</base-button
-          >
-            <img v-else @click="logout"
-              src="https://i.pinimg.com/474x/5f/3b/48/5f3b486198cb4e1db5729207a666c750.jpg"
-              alt=""
-          />
-        </div>
-        <div class="navOpener" @click="changeNav">
-          <div class="bar1" :class="{ openNav: hamburgerStatus }"></div>
-          <div class="bar2" :class="{ openNav: hamburgerStatus }"></div>
-          <div class="bar3" :class="{ openNav: hamburgerStatus }"></div>
-        </div>
-      </div>
-    </nav>
-    <transition name="stir" @before-enter="beforeEnter">
-      <div v-if="hamburgerStatus" class="navLoc">
-        <ul class="sidenav">
-          <li>
-            <base-button v-if="!isLogged" link to="/register">Register</base-button>
-          </li>
+  <section>
+    <base-login
+      :message="finalLogMessage"
+      :show="status"
+      @close="login"
+    ></base-login>
+    <header>
+      <nav>
+        <h1>
+          <base-button link to="/">Home Page</base-button>
+        </h1>
+        <ul v-if="!hamburgerStatus">
           <li>
             <base-button link to="/about">About</base-button>
           </li>
+          <li>
+            <base-button v-if="!isLogged" link to="/register"
+              >Register</base-button
+            >
+          </li>
         </ul>
-      </div>
-    </transition>
-  </header>
-</section>
+        <div class="nav-mobile">
+          <base-button v-if="isLogged" link to="/posting">&#x2b; a</base-button>
+          <base-button
+            v-if="!isLogged"
+            @click="
+              login(
+                (logMessage =
+                  'please login to post' || 'unidentified error contact sport')
+              )
+            "
+            >&#x2b; a</base-button
+          >
+          <div class="profile" :class="{ image: isLogged }">
+            <base-button navBar v-if="!isLogged" @click="login"
+              >Login</base-button
+            >
+            <img
+              v-else
+              @click="logout"
+              src="https://i.pinimg.com/474x/5f/3b/48/5f3b486198cb4e1db5729207a666c750.jpg"
+              alt=""
+            />
+          </div>
+          <div class="navOpener" @click="changeNav">
+            <div class="bar1" :class="{ openNav: hamburgerStatus }"></div>
+            <div class="bar2" :class="{ openNav: hamburgerStatus }"></div>
+            <div class="bar3" :class="{ openNav: hamburgerStatus }"></div>
+          </div>
+        </div>
+      </nav>
+      <transition name="stir" @before-enter="beforeEnter">
+        <div v-if="hamburgerStatus" class="navLoc">
+          <ul class="sidenav">
+            <li>
+              <base-button v-if="!isLogged" link to="/register"
+                >Register</base-button
+              >
+            </li>
+            <li>
+              <base-button link to="/about">About</base-button>
+            </li>
+          </ul>
+        </div>
+      </transition>
+    </header>
+  </section>
 </template>
 
 <script>
@@ -56,27 +74,36 @@ export default {
     return {
       status: false,
       hamburgerStatus: false,
+      postingStat: false,
+      finalLogMessage: null
     };
   },
   computed: {
     isLogged() {
       return this.$store.getters.getAuth;
-    },
+    }
   },
   methods: {
     beforeEnter() {
       console.log("before enter");
     },
-    login() {
+    login(logMessage) {
+      if (typeof(logMessage) === String) {
+        console.log(`changed message to ${logMessage}`);
+        this.finalLogMessage = logMessage;
+      }
       this.status = !this.status;
+    },
+    posting() {
+      this.postingStat = !this.postingStat;
     },
     logout() {
       this.$store.dispatch("logOut");
     },
     changeNav() {
       this.hamburgerStatus = !this.hamburgerStatus;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -96,6 +123,7 @@ nav {
 .nav-mobile {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 ul {
   list-style: none;
@@ -111,17 +139,16 @@ ul {
   max-width: 100%;
   max-height: 100%;
 }
-.image{
-  
+.image {
   margin: 3%;
   max-width: 13%;
   max-height: 13%;
 }
 
 img {
-max-height: 70%;
-max-width: 100%;
-cursor: pointer;
+  max-height: 70%;
+  max-width: 100%;
+  cursor: pointer;
 }
 
 @media (max-width: 540px) {

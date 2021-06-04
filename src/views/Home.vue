@@ -1,7 +1,8 @@
 <template>
   <base-card :form="'homeForm'">
     <section class="container" v-if="getThis !== null">
-      <div class="posts" v-for="post in getPreview" :key="post">
+      <transition-group tag="postMagick" name="posts">
+      <div class="posts" v-for="post in getPreview" :key="post._id">
           <div class="user"> --{{ post.author.name }}</div>
         <div class="title">
           <router-link :to="{name: 'comment', params: {postId:post._id}} " >
@@ -12,6 +13,7 @@
           <div class="message">{{ post.body.messageMethod() }}</div>
         </div>
       </div>
+      </transition-group>
     </section>
   </base-card>
 </template>
@@ -59,5 +61,16 @@ export default {
   position: relative;
   align-self: flex-end;
 }
-
+.posts-enter-to,
+.posts-leave-from {
+  opacity: 1;
+}
+.posts-enter-from,
+.posts-leave-to {
+  opacity: 0.3;
+}
+.posts-enter-active,
+.posts-leave-active {
+  transition: 0.2s ease-in;
+}
 </style>
