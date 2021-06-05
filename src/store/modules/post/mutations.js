@@ -1,5 +1,3 @@
-
-
 export default {
   post(state, payload) {
     const postData = [];
@@ -13,7 +11,8 @@ export default {
           title: data.body.title,
           message: data.body.message
         },
-        _id: data._id
+        _id: data._id,
+        date: data.createdAt
       };
       const previewPost = {
         author: {
@@ -37,7 +36,8 @@ export default {
             }
           }
         },
-        _id: data._id
+        _id: data._id,
+        date: data.createdAt
       };
       postData.push(post);
       previewData.push(previewPost);
@@ -61,7 +61,6 @@ export default {
     state.currentPost = post;
   },
   async updateHomePage(state, payload) {
-    
     console.log(payload);
     const post = {
       author: {
@@ -71,7 +70,8 @@ export default {
         title: payload.body.title,
         message: payload.body.message
       },
-      _id: payload._id
+      _id: payload._id,
+      date: payload.createdAt
     };
     const previewPost = {
       author: {
@@ -95,9 +95,13 @@ export default {
           }
         }
       },
-      _id: payload._id
+      _id: payload._id,
+      date: payload.createdAt
     };
     await state.posts.unshift(post);
     await state.previewPosts.unshift(previewPost);
+  },
+  clearCache(state) {
+    state.currentPost = [];
   }
 };

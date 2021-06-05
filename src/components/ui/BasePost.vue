@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section v-if="!isLoading" class="container">
     <div class="posts" v-for="posts in post" :key="posts">
       <div class="user">--{{ posts.author.name }}</div>
       <div class="title">
@@ -19,24 +19,32 @@
 <script>
 export default {
   emits: ["doneLoading"],
+  data() {
+    return {
+      isLoading: true
+    };
+  },
   computed: {
     post() {
       return this.$store.getters["getPost"];
     },
     postId() {
-      const post = this.$store.getters['getCurrentPostId']
-     return post
+      const post = this.$store.getters["getCurrentPostId"];
+      return post;
     }
   },
   methods: {
     async getPost() {
-      await this.$store.dispatch("getpost", this.postId);
-      this.$emit("doneLoading");
-    },
+      await this.$store.dispatch("getpost", this.postId).then(() => {
+        this.isLoading = false;
+        console.log('@getPost method.then');
+        this.$emit("doneLoading");
+      });
+    }
   },
-   async activated() {
-     await this.getPost();
-  },
+  async activated() {
+    await this.getPost();
+  }
 };
 </script>
 

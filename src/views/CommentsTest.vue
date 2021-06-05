@@ -2,8 +2,8 @@
   <section class="contain">
     <base-spinner v-show="isLoading || !doneLoading"></base-spinner>
     <div class="checkIfLoaded" v-show="!isLoading">
-      <base-post @doneLoading="postLoaded" ></base-post>
-      <div class="body">
+      <base-post @doneLoading="postLoaded"></base-post>
+      <div class="body" v-if="!isLoading">
         <transition-group tag="ui" name="comment">
           <div v-for="com in comments" :key="com">
             <div class="commentor" v-show="com.commentorName !== null">
@@ -52,24 +52,25 @@ export default {
   data() {
     return {
       clickedLogin: false,
-      isLoading: false,
+      isLoading: true,
       commentToBe: "",
-      doneLoading: false,
+      doneLoading: false
     };
   },
   async activated() {
-    await this.$store.dispatch('setPost', this.postId)
+    await this.$store.dispatch("setPost", this.postId);
     await this.getComments();
   },
   async deactivated() {
-    await this.$store.dispatch("clearCrumbs");
-    await this.$store.dispatch("clearPost");
+    // await this.$store.dispatch("clearCrumbs");
+    this.isLoading = true;
+    this.doneLoading = false;
+    // await this.$store.dispatch("clearPost");
   },
   methods: {
-    async getComments() {
-      this.isLoading = true;
-      await this.$store.dispatch("getComments", this.postId);
-      this.isLoading = false;
+    postLoaded() {
+      console.log("@postLoaded");
+      this.doneLoading = true;
     },
     startLogin() {
       this.clickedLogin = !this.clickedLogin;
@@ -77,12 +78,9 @@ export default {
     async saveComment() {
       if (this.commentToBe !== "") {
         await this.$store.dispatch("saveComment", this.commentToBe);
-        this.commentToBe = ''
+        this.commentToBe = "";
       }
-    },
-    postLoaded() {
-      this.doneLoading = true;
-    },
+    }
   },
   computed: {
     comments() {
@@ -90,8 +88,18 @@ export default {
     },
     isLogged() {
       return this.$store.getters["getAuth"];
-    },
+    }
   },
+  watch: {
+    doneLoading: async function() {
+      if (this.doneLoading) {
+        await this.$store.dispatch("getComments", this.postId).then(() => {
+          console.log("@isLoading change");
+          this.isLoading = false;
+        });
+      }
+    }
+  }
 };
 </script>
 <style scoped>

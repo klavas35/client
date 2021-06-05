@@ -3,7 +3,7 @@
     <section class="container" v-if="getThis !== null">
       <transition-group tag="postMagick" name="posts">
       <div class="posts" v-for="post in getPreview" :key="post._id">
-          <div class="user"> --{{ post.author.name }}</div>
+          <div class="user"> --{{ post.author.name }} + {{post.date}}</div>
         <div class="title">
           <router-link :to="{name: 'comment', params: {postId:post._id}} " >
             {{ post.body.titleMethod() }}
