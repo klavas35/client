@@ -8,7 +8,7 @@ export default {
             userAge: payload.age,
             email: payload.email,
             password: payload.password,
-            type: 'test',
+            type: 'testee',
         }
         const response = await axios({
             url: localUrl + '/register',
@@ -49,7 +49,6 @@ export default {
         })
     },
     async login(context, payload) {
-        console.log('@login');
         await axios({
             url: localUrl + '/login',
             method: 'POST',
@@ -61,7 +60,6 @@ export default {
             withCredentials: true
 
         }).then(async (response) => {
-            console.log(`this is response.data ${JSON.stringify(response.data)}`);
             await store.dispatch('isLogged')
             if (response.data === 'error') {
                 const error = new Error(JSON.stringify(response.data) || 'something is wrong')
@@ -71,5 +69,19 @@ export default {
     },
     passworValidation(context, payload) {
         context.commit('validator', payload)
+    },
+    doesUserExists(context, payload) {
+        axios({
+            url: localUrl + '/doesUserExists',
+            method:'POST',
+            data:{
+                userName:payload
+            },
+            withCredentials:true
+        }).then((response) => {
+            context.commit('userValidity', response.data)
+        }).catch((err) => {
+            console.log(err);
+        })
     }
 }

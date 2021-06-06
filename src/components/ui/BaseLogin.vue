@@ -11,7 +11,7 @@
         </header>
         <section>
           <slot>
-          <p class="message">{{defMessage}}</p>
+          <p v-if="finalLogMessage!==''" class="message">{{finalLogMessage}}</p>
             <form @submit.prevent="">
               <div class="contain-input">
                 <div>
@@ -78,7 +78,6 @@ export default {
       default: false,
     },
     message:{
-      type:String,
       required:false,
       default:null
     }
@@ -90,7 +89,7 @@ export default {
       name: "",
       password: "",
     });
-    const defMessage = ref(props.message || 'Default message')
+
     const errorHandle = ref(false);
     const login = async () => {
       if (user.value.name !== "" && user.value.password !== "") {
@@ -116,18 +115,33 @@ export default {
       user,
       login,
       errorHandle,
-      defMessage
     };
   },
-
+data() {
+  return{
+    finalLogMessage:''
+  }
+},
   emits: ["close"],
   methods: {
+    getLogMessage(data) {
+      this.finalLogMessage = data
+    },
     tryClose() {
       if (this.fixed) {
         return;
       }
+      this.finalLogMessage = ''
       this.$emit("close");
     },
+  },
+  watch: {
+    message: {
+      deep: true,
+      handler: function(newVal){
+        this.getLogMessage(newVal)
+      }
+    }
   },
 };
 </script>

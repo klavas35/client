@@ -29,6 +29,10 @@ export default {
       this.hasUpperCase = /[A-Z]/.test(this.password);
       // eslint-disable-next-line no-useless-escape
       this.hasSpecialChar = /[!@#\$%\^\&*\)\(+=._-]/.test(this.password);
+      this.hasNoSpace = !/\s/g.test(this.password)
+      if(this.correctLength&&this.hasNumber&&this.hasLowerCase&&this.hasUpperCase&&this.hasSpecialChar) {
+        this.$emit('validationComplation')
+      }
       const validator = {
           length: this.correctLength,
           hasNum : this.hasNumber,

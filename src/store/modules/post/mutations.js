@@ -61,7 +61,6 @@ export default {
     state.currentPost = post;
   },
   async updateHomePage(state, payload) {
-    console.log(payload);
     const post = {
       author: {
         name: payload.author.name

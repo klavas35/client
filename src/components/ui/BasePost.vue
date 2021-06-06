@@ -37,7 +37,6 @@ export default {
     async getPost() {
       await this.$store.dispatch("getpost", this.postId).then(() => {
         this.isLoading = false;
-        console.log('@getPost method.then');
         this.$emit("doneLoading");
       });
     }

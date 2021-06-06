@@ -11,5 +11,8 @@ export default {
             hasSpecial: payload.hasSpecial
         }
         state.isValid=validator
+    },
+    userValidity(state, payload) {
+        state.userIsValid = payload
     }
 }

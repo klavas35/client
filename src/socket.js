@@ -9,7 +9,6 @@ var socket = io(URL, {
   transports: ["websocket", "polling", "flashsocket"]
 });
 socket.on("updateHome", () => {
-  console.log("@socket");
   store.dispatch("getPosts");
 });
 socket.on("updatePost", data => {
@@ -18,7 +17,6 @@ socket.on("updatePost", data => {
   }
 });
 socket.on("updateHome", data => {
-  console.log(`@updateHome`);
   store.dispatch("homePageUpdate", data);
 });
 socket.onAny((event, ...args) => {

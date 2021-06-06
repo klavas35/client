@@ -4,5 +4,8 @@ export default {
     },
     isValid(state) {
         return state.isValid
+    },
+    validUser(state) {
+        return state.userIsValid
     }
 }

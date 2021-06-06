@@ -2,17 +2,19 @@
   <base-card :form="'homeForm'">
     <section class="container" v-if="getThis !== null">
       <transition-group tag="postMagick" name="posts">
-      <div class="posts" v-for="post in getPreview" :key="post._id">
-          <div class="user"> --{{ post.author.name }} + {{post.date}}</div>
-        <div class="title">
-          <router-link :to="{name: 'comment', params: {postId:post._id}} " >
-            {{ post.body.titleMethod() }}
-          </router-link>
-        </div>
+        <div class="posts" v-for="post in getPreview" :key="post._id">
+          <div class="user">--{{ post.author.name }} + {{ post.date }}</div>
+          <div class="title">
+            <router-link
+              :to="{ name: 'comment', params: { postId: post._id } }"
+            >
+              {{ post.body.titleMethod() }}
+            </router-link>
+          </div>
           <div class="text">
-          <div class="message">{{ post.body.messageMethod() }}</div>
+            <div class="message">{{ post.body.messageMethod() }}</div>
+          </div>
         </div>
-      </div>
       </transition-group>
     </section>
   </base-card>
@@ -28,9 +30,16 @@ export default {
       return getThis;
     },
     getPreview() {
-      return this.$store.getters['getPreview']
+      return this.$store.getters["getPreview"];
+    },
+    listing() {
+      if (this.getPreview != undefined) {
+        let localListing = JSON.parse(JSON.stringify(this.getPreview));
+        return localListing.sort();
+      }
+      else return 2
     }
-  },
+  }
 };
 </script>
 

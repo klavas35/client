@@ -69,7 +69,6 @@ export default {
   },
   methods: {
     postLoaded() {
-      console.log("@postLoaded");
       this.doneLoading = true;
     },
     startLogin() {
@@ -94,7 +93,6 @@ export default {
     doneLoading: async function() {
       if (this.doneLoading) {
         await this.$store.dispatch("getComments", this.postId).then(() => {
-          console.log("@isLoading change");
           this.isLoading = false;
         });
       }

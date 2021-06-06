@@ -27,7 +27,7 @@
             @click="
               login(
                 (logMessage =
-                  'please login to post' || 'unidentified error contact sport')
+                  'please login to post' || 'unidentified error contact support')
               )
             "
             >&#x2b; a</base-button
@@ -85,11 +85,9 @@ export default {
   },
   methods: {
     beforeEnter() {
-      console.log("before enter");
     },
     login(logMessage) {
-      if (typeof(logMessage) === String) {
-        console.log(`changed message to ${logMessage}`);
+      if (logMessage == 'please login to post' || logMessage == 'unidentified error contact support') {
         this.finalLogMessage = logMessage;
       }
       this.status = !this.status;

@@ -52,18 +52,16 @@ export default {
     context.commit("clearCache");
   },
   async addPost(context, payload) {
-    console.log(payload.message);
     axios({
       url: url + "/",
       method: "POST",
       data: {
         title: payload.title,
         message: payload.message,
-        testStatus: true
+        testStatus: false
       },
       withCredentials: true
-    }).then(response => {
-      console.log(response);
+    }).then(()=> {
     });
   },
   homePageUpdate(context, payload) {
