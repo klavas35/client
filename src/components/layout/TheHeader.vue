@@ -6,7 +6,7 @@
       @close="login"
     ></base-login>
     <header>
-      <nav>
+      <nav class="navi">
         <h1>
           <base-button link to="/">Home Page</base-button>
         </h1>
@@ -188,7 +188,12 @@ img {
   .navLoc {
     display: flex;
     position: absolute;
+    z-index: 100;
     right: 0%;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
   }
   .sidenav {
     display: flex;
