@@ -47,13 +47,6 @@
             />
             <transition name="profile">
               <div id="hoverProfile" v-if="hoveringProfile">
-                <div id="profileItems">
-                  <ul>
-                    <li>
-                      <base-button>logout</base-button>
-                    </li>
-                  </ul>
-                </div>
               </div>
             </transition>
           </div>
