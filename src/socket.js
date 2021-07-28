@@ -20,7 +20,6 @@ socket.on("updateHome", data => {
   store.dispatch("homePageUpdate", data);
 });
 socket.onAny((event, ...args) => {
-  console.log(event, args);
 });
 
 export default socket;
