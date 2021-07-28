@@ -31,7 +31,7 @@
                   'unidentified error contact support')
               )
             "
-            >&#x2b; a</base-button
+            >&#x2b; add post </base-button
           >
           <div class="profile" :class="{ image: isLogged }">
             <base-button navBar v-if="!isLogged" @click="login"
