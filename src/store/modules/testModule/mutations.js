@@ -14,5 +14,8 @@ export default {
     },
     userValidity(state, payload) {
         state.userIsValid = payload
+    },
+    changeGoogleValidity(state, payload) {
+        state.googleAccountIsValid = payload
     }
 }

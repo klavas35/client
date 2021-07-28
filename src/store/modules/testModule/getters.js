@@ -7,5 +7,8 @@ export default {
     },
     validUser(state) {
         return state.userIsValid
+    },
+    isAccountValid(state) {
+        return state.googleAccountIsValid
     }
 }

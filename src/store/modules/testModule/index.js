@@ -5,7 +5,8 @@ export default {
     state() {
         return {
             isLogged: false,
-            isValid:{}
+            isValid:{},
+            googleAccountIsValid:false
         }
     },
     mutations,

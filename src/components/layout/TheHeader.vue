@@ -27,7 +27,8 @@
             @click="
               login(
                 (logMessage =
-                  'please login to post' || 'unidentified error contact support')
+                  'please login to post' ||
+                  'unidentified error contact support')
               )
             "
             >&#x2b; a</base-button
@@ -39,10 +40,24 @@
             <img
               v-else
               @click="logout"
+              @mouseover="profileHover"
+              @mouseout="profileUnHover"
               src="https://i.pinimg.com/474x/5f/3b/48/5f3b486198cb4e1db5729207a666c750.jpg"
               alt=""
             />
+            <transition name="profile">
+              <div id="hoverProfile" v-if="hoveringProfile">
+                <div id="profileItems">
+                  <ul>
+                    <li>
+                      <base-button>logout</base-button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </transition>
           </div>
+
           <div class="navOpener" @click="changeNav">
             <div class="bar1" :class="{ openNav: hamburgerStatus }"></div>
             <div class="bar2" :class="{ openNav: hamburgerStatus }"></div>
@@ -75,7 +90,8 @@ export default {
       status: false,
       hamburgerStatus: false,
       postingStat: false,
-      finalLogMessage: null
+      finalLogMessage: null,
+      hoveringProfile: true
     };
   },
   computed: {
@@ -84,10 +100,12 @@ export default {
     }
   },
   methods: {
-    beforeEnter() {
-    },
+    beforeEnter() {},
     login(logMessage) {
-      if (logMessage == 'please login to post' || logMessage == 'unidentified error contact support') {
+      if (
+        logMessage == "please login to post" ||
+        logMessage == "unidentified error contact support"
+      ) {
         this.finalLogMessage = logMessage;
       }
       this.status = !this.status;
@@ -100,12 +118,42 @@ export default {
     },
     changeNav() {
       this.hamburgerStatus = !this.hamburgerStatus;
+    },
+    profileHover() {
+      this.hoveringProfile = true;
+    },
+    profileUnHover() {
+      // this.hoveringProfile = false
     }
   }
 };
 </script>
 
 <style scoped>
+#hoverProfile {
+  display: flex;
+  position: absolute;
+  z-index: 100;
+  right: 0%;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+}
+#profileItems {
+  display: flex;
+  flex-direction: column;
+  border-radius: 3%;
+  max-height: 100%;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  background-color: #7f5539;
+}
+#profileItems ul li {
+  margin-top: 3%;
+  margin-left: 23%;
+}
 h1 {
   margin: 0;
 }
@@ -208,5 +256,32 @@ img {
   .sidenav li {
     margin: 3%;
   }
+  #hoverProfile {
+  display: flex;
+  position: absolute;
+  z-index: 100;
+  right: 0%;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+}
+#profileItems {
+  display: flex;
+  flex-direction: column;
+  border-radius: 3%;
+  max-height: 100%;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  background-color: #7f5539;
+}
+#profileItems ul li {
+  margin-top: 3%;
+  margin-left: 23%;
+}
+h1 {
+  margin: 0;
+}
 }
 </style>
