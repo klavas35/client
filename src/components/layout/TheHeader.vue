@@ -21,7 +21,7 @@
           </li>
         </ul>
         <div class="nav-mobile">
-          <base-button v-if="isLogged" link to="/posting">&#x2b; a</base-button>
+          <base-button v-if="isLogged" link to="/posting">&#x2b; add post</base-button>
           <base-button
             v-if="!isLogged"
             @click="
