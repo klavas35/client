@@ -59,7 +59,6 @@ export default {
   },
   async activated() {
     await this.$store.dispatch("setPost", this.postId);
-    await this.getComments();
   },
   async deactivated() {
     // await this.$store.dispatch("clearCrumbs");
