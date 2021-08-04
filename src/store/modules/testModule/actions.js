@@ -57,7 +57,23 @@ export default {
   },
   passworValidation(context, payload) {
     context.commit("validator", payload);
-  }
+  },
+  doesUserExists(context, payload) {
+    axios({
+      url: localUrl + "/doesUserExists",
+      method: "POST",
+      data: {
+        userName: payload
+      },
+      withCredentials: true
+    })
+      .then(response => {
+        context.commit("userValidity", response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
 };
 
 
