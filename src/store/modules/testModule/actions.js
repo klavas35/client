@@ -78,7 +78,7 @@ export default {
 
 
 async function JWTSign(user, type) {
-  console.log(`this is JWTSign user : ${user}`);
+  console.log(`this is JWTSign user : ${JSON.stringify(user)}`);
   jwt.sign(
     { user: user },
     process.env.VUE_APP_JWT_SECRET,
