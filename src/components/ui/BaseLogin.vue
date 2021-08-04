@@ -157,6 +157,7 @@ export default {
           type: "googleRegister"
         };
         store.dispatch("registerUser", user).then(() => {
+          console.log(`this is login google user : ${user}`);
           this.$emit('close')
         })
       } catch (error) {
