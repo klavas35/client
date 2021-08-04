@@ -6,7 +6,7 @@
       @close="showIt"
     ></base-login>
     <form id="form-register" @submit.prevent="">
-      <h2>{{getValidity}}</h2>
+      <h2>{{ getValidity }}</h2>
       <div class="form-control">
         <label for="username">User Name :</label>
         <input
@@ -52,10 +52,16 @@
       </div>
       <div class="buttons">
         <base-button v-if="isVal && validUserName" @click="saveUser"
-          >}Register</base-button
+          >Register</base-button
         >
-        <p v-else>Please Fill all spaces {{ isVal }}</p>
+        <base-button v-else>Please Fill all spaces {{ isVal }}</base-button>
         <base-button @click="showIt" mode="flat">Login instead</base-button>
+        <img
+          class="googleLogin"
+          src="https://icon-library.com/images/google-login-icon/google-login-icon-24.jpg"
+          @click="saveUserWithGoogle"
+          alt=""
+        />
       </div>
     </form>
   </section>
@@ -69,7 +75,7 @@ import { useRouter } from "vue-router";
 import BaseLogin from "../ui/BaseLogin.vue";
 import PasswordHelper from "./PasswordHelper.vue";
 // import bcryprjs from 'bcryptjs'
-
+import store from "../../store";
 export default {
   components: { BaseLogin, PasswordHelper },
   setup() {
@@ -90,7 +96,8 @@ export default {
         name: user.value.name,
         password: user.value.password,
         email: user.value.email,
-        age: user.value.age
+        age: user.value.age,
+        type: "regulerRegister"
       };
       if (isVal.value && validUserName.value) {
         await store
@@ -103,6 +110,7 @@ export default {
           });
       }
     };
+    
     const showIt = () => {
       showDial.value = !showDial.value;
     };
@@ -110,24 +118,24 @@ export default {
       isVal.value = true;
     };
     const getValidity = computed(() => {
-      const isUserNameValid = store.getters['validUser']
-      return isUserNameValid
-    })
+      const isUserNameValid = store.getters["validUser"];
+      return isUserNameValid;
+    });
     watch(
       user.value,
       _.debounce(async function(curVal) {
         timedValid.value = false;
-        await store.dispatch('doesUserExists', curVal.name)
+        await store.dispatch("doesUserExists", curVal.name);
       }, 2500)
     );
-    watch(getValidity, (curVal) => {
-      if(curVal) {
-        return
+    watch(getValidity, curVal => {
+      if (curVal) {
+        return;
       } else {
-        timedValid.value = true
-        validUserName.value =true
+        timedValid.value = true;
+        validUserName.value = true;
       }
-    })
+    });
 
     return {
       user,
@@ -138,8 +146,32 @@ export default {
       isVal,
       validUserName,
       timedValid,
-      getValidity
+      getValidity,
     };
+  },
+  methods:{
+     async saveUserWithGoogle() {
+      try {
+        const googleUser = await this.$gAuth.signIn();
+        if (!googleUser) {
+          return null;
+        }
+
+        const user = {
+          name: googleUser.getBasicProfile().ET,
+          surname: googleUser.getBasicProfile().GR,
+          gId: googleUser.getBasicProfile().$R,
+          email: googleUser.getBasicProfile().zt,
+          idToken: googleUser.getAuthResponse().id_token,
+          type: "googleRegister"
+        };
+        store.dispatch("registerUser", user);
+      } catch (error) {
+        //on fail do something
+        console.error(error);
+        return null;
+      }
+    }
   }
 };
 </script>
@@ -208,11 +240,19 @@ h3 {
 }
 .buttons {
   display: flex;
+  align-content: center;
+  justify-content: center;
+  margin-left: 1%;
 }
 .userIsNotValid {
   color: red;
 }
 .userIsValid {
   color: green;
+}
+.googleLogin {
+  height: 35px;
+  margin: 3%;
+  cursor: pointer;
 }
 </style>

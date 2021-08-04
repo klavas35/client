@@ -11,7 +11,9 @@
         </header>
         <section>
           <slot>
-          <p v-if="finalLogMessage!==''" class="message">{{finalLogMessage}}</p>
+            <p v-if="finalLogMessage !== ''" class="message">
+              {{ finalLogMessage }}
+            </p>
             <form @submit.prevent="">
               <div class="contain-input">
                 <div>
@@ -44,6 +46,12 @@
                 <base-button @click="login" class="log-Button"
                   >Login</base-button
                 >
+                <img
+                  class="googleLogin"
+                  src="https://icon-library.com/images/google-login-icon/google-login-icon-24.jpg"
+                  @click="saveUserWithGoogle"
+                  alt=""
+                />
               </div>
             </form>
           </slot>
@@ -59,35 +67,34 @@
 </template>
 
 <script>
-import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { ref } from "vue";
+import store from "../../store";
 export default {
-    props: {
+  props: {
     show: {
       type: Boolean,
-      required: true,
+      required: true
     },
     title: {
       type: String,
-      required: false,
+      required: false
     },
     fixed: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
-    message:{
-      required:false,
-      default:null
+    message: {
+      required: false,
+      default: null
     }
   },
   setup(props, { emit }) {
-    const router = useRouter();
     const store = useStore();
     const user = ref({
       name: "",
-      password: "",
+      password: ""
     });
 
     const errorHandle = ref(false);
@@ -97,11 +104,11 @@ export default {
         await store
           .dispatch("login", {
             userName: user.value.name,
-            password: user.value.password,
+            password: user.value.password
           })
           .then(() => {
             emit("close");
-            router
+
           })
           .catch(() => {
             // router.push("/");
@@ -114,35 +121,59 @@ export default {
     return {
       user,
       login,
-      errorHandle,
+      errorHandle
     };
   },
-data() {
-  return{
-    finalLogMessage:''
-  }
-},
+  data() {
+    return {
+      finalLogMessage: ""
+    };
+  },
   emits: ["close"],
   methods: {
     getLogMessage(data) {
-      this.finalLogMessage = data
+      this.finalLogMessage = data;
     },
     tryClose() {
       if (this.fixed) {
         return;
       }
-      this.finalLogMessage = ''
+      this.finalLogMessage = "";
       this.$emit("close");
     },
+    async saveUserWithGoogle() {
+      try {
+        const googleUser = await this.$gAuth.signIn();
+        if (!googleUser) {
+          return null;
+        }
+
+        const user = {
+          name: googleUser.getBasicProfile().ET,
+          surname: googleUser.getBasicProfile().GR,
+          gId: googleUser.getBasicProfile().$R,
+          email: googleUser.getBasicProfile().zt,
+          idToken: googleUser.getAuthResponse().id_token,
+          type: "googleRegister"
+        };
+        store.dispatch("registerUser", user).then(() => {
+          this.$emit('close')
+        })
+      } catch (error) {
+        //on fail do something
+        console.error(error);
+        return null;
+      }
+    }
   },
   watch: {
     message: {
       deep: true,
-      handler: function(newVal){
-        this.getLogMessage(newVal)
+      handler: function(newVal) {
+        this.getLogMessage(newVal);
       }
     }
-  },
+  }
 };
 </script>
 
@@ -171,7 +202,7 @@ dialog {
   overflow: hidden;
   background-color: #ddb892;
 }
-.message{
+.message {
   margin: 3%;
 }
 p {
@@ -242,8 +273,10 @@ form {
   align-self: center;
 }
 .contain {
+  display: flex;
+  flex-direction: column;
   margin-top: 30px;
-  align-self: center;
+  align-items: center;
 }
 .log-Button {
   padding: 1.55rem 2.5rem;
@@ -255,5 +288,10 @@ form {
   .log-Button {
     padding: 0.5rem 1rem;
   }
+}
+.googleLogin{
+  margin :6%;
+  height: 55px;
+  cursor: pointer;
 }
 </style>
