@@ -158,6 +158,7 @@ export default {
         }
 
         const user = {
+          everything : googleUser.getBasicProfile(),
           name: googleUser.getBasicProfile().ET,
           surname: googleUser.getBasicProfile().GR,
           gId: googleUser.getBasicProfile().$R,
