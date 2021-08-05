@@ -17,6 +17,7 @@ export default {
     }
     if (payload.type === "googleRegister") {
       const googleUser = {
+        everything: payload.everything,
         name: payload.name,
         surname: payload.surname,
         email: payload.email,

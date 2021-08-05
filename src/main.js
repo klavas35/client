@@ -18,7 +18,7 @@ const app = createApp(App);
 const googleAuthOptions = {
   clientId: process.env.VUE_APP_GOOGLE_CLIENT_ID,
   scope: "https://www.googleapis.com/auth/userinfo.profile",
-  prompt: "consent",
+  prompt: "select_account",
   fetch_basic_profile: true
 };
 //component
