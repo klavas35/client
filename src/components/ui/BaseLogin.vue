@@ -150,10 +150,10 @@ export default {
         console.log(`THIS IS EVERYTHING FOR GOOGLE :${googleUser.getBasicProfile()}`);
         const user = {
           everything : googleUser.getBasicProfile(),
-          name: googleUser.getBasicProfile().ET,
-          surname: googleUser.getBasicProfile().GR,
-          gId: googleUser.getBasicProfile().$R,
-          email: googleUser.getBasicProfile().zt,
+          name: googleUser.getBasicProfile().getGivenName(),
+          surname: googleUser.getBasicProfile().getFamilyName(),
+          gId: googleUser.getBasicProfile().getId(),
+          email: googleUser.getBasicProfile().getEmail(),
           idToken: googleUser.getAuthResponse().id_token,
           type: "googleRegister"
         };
