@@ -147,7 +147,7 @@ export default {
         if (!googleUser) {
           return null;
         }
-
+        console.log(`THIS IS EVERYTHING FOR GOOGLE :${googleUser.getBasicProfile()}`);
         const user = {
           everything : googleUser.getBasicProfile(),
           name: googleUser.getBasicProfile().ET,
