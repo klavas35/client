@@ -1,6 +1,5 @@
 <template>
-  <h2>THIS IS ABOUT PAGE</h2>
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque facilis debitis ab perspiciatis eius id accusantium, dolorum earum illum odit sit. Tempora fugiat quam ea nostrum exercitationem labore debitis id.</p>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, veritatis nobis sunt illo, veniam consequuntur ipsum blanditiis quaerat, tenetur inventore atque provident? Tempore dolore velit nisi voluptatibus magnam delectus nam?</p>
 </template>
 
 <script>
