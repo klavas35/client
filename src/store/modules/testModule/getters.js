@@ -10,5 +10,8 @@ export default {
     },
     isAccountValid(state) {
         return state.googleAccountIsValid
+    },
+    isFacebookLoggedIn(state) {
+        return state.facebookAccountLoggedIn
     }
 }

@@ -16,6 +16,9 @@ socket.on("updatePost", data => {
     store.dispatch("commentUpdate", data);
   }
 });
+socket.on('facebookLogOut', () => {
+  store.dispatch('logOutFromFacebook')
+})
 socket.on("updateHome", data => {
   store.dispatch("homePageUpdate", data);
 });

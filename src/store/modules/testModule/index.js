@@ -6,7 +6,8 @@ export default {
         return {
             isLogged: false,
             isValid:{},
-            googleAccountIsValid:false
+            googleAccountIsValid:false,
+            facebookAccountLoggedIn:false
         }
     },
     mutations,

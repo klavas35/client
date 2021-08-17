@@ -1,7 +1,9 @@
+/* eslint-disable */
 import axios from "axios";
 import store from "../..";
 import jwt from "jsonwebtoken";
 const localUrl = process.env.VUE_APP_SERVER_URL + "/users";
+
 export default {
   async registerUser(context, payload) {
     if (payload.type === "regularRegister") {
@@ -27,6 +29,18 @@ export default {
       };
       JWTSign(googleUser, 'register');
       return;
+    }
+    if(payload.type ==='facebookRegister') {
+      const facebookUser = {
+        name:payload.name,
+        surname:payload.surname,
+        email:payload.email,
+        facebookId:payload.facebookId,
+        type:payload.type,
+        idToken:payload.accessToken
+      }
+      context.commit('facebookLoginMutation', true)
+      JWTSign(facebookUser, 'register')
     }
   },
   async isLogged(context) {
@@ -75,6 +89,13 @@ export default {
         console.log(err);
       });
   },
+  logOutFromFacebook(context) {
+    FB.logout()
+    context.commit('facebookLoginMutation');
+  },
+  facebookUserLoggedIn(context,payload){
+    context.commit('facebookLoginMutation', payload)
+  }
 };
 
 
@@ -90,7 +111,7 @@ async function JWTSign(user, type) {
         await registerFunction(token);
         return
       } if (type === 'login') {
-        await login(token)
+        await loginFunction(token)
       }
     }
   );
@@ -113,7 +134,7 @@ async function registerFunction(token) {
     throw error;
   }
 }
-async function login(token) {
+async function loginFunction(token) {
   await axios({
     url: localUrl + "/login",
     method: "POST",
