@@ -1,13 +1,8 @@
-const fs = require('fs');
-module.exports= {
-    devServer:{
-        open:process.platform === 'darwin',
-        host:'0.0.0.0',
-        port:8080,
-        https:{
-            key: fs.readFileSync('/home/silverdrop/Documents/Javascript/FormProject/client/localhost-key.pem'),
-            cert: fs.readFileSync('/home/silverdrop/Documents/Javascript/FormProject/client/localhost.pem')
-        },
-        hotOnly:false,
-    },
-};
+// vue.config.js file to be placed in the root of your repository
+
+module.exports = {
+    publicPath: process.env.NODE_ENV === 'production'
+      ? '/' + process.env.CI_PROJECT_NAME + '/'
+      : '/'
+  }
+  
