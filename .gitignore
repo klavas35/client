@@ -24,3 +24,4 @@ vue-config-local.js
 *.njsproj
 *.sln
 *.sw?
+vue.config-local.js
