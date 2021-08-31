@@ -46,12 +46,20 @@
                 <base-button @click="login" class="log-Button"
                   >Login</base-button
                 >
-                <img
-                  class="googleLogin"
-                  src="https://icon-library.com/images/google-login-icon/google-login-icon-24.jpg"
-                  @click="saveUserWithGoogle"
-                  alt=""
-                />
+                <div class="socialLogin">
+                  <img
+                    class="googleLogin"
+                    src="https://icon-library.com/images/google-login-icon/google-login-icon-24.jpg"
+                    @click="saveUserWithGoogle"
+                    alt=""
+                  />
+                  <img
+                    class="googleLogin"
+                    src="https://img1.pnghut.com/18/25/22/10QabnQ6pe/text-rectangle-sign-facebook-like-button-inc.jpg"
+                    @click="loginWithFacebook"
+                    alt=""
+                  />
+                </div>
               </div>
             </form>
           </slot>
@@ -67,6 +75,8 @@
 </template>
 
 <script>
+/* eslint-disable */
+
 import { useStore } from "vuex";
 import { ref } from "vue";
 import store from "../../store";
@@ -108,7 +118,6 @@ export default {
           })
           .then(() => {
             emit("close");
-
           })
           .catch(() => {
             // router.push("/");
@@ -148,7 +157,7 @@ export default {
           return null;
         }
         const user = {
-          everything : googleUser.getBasicProfile(),
+          everything: googleUser.getBasicProfile(),
           name: googleUser.getBasicProfile().getGivenName(),
           surname: googleUser.getBasicProfile().getFamilyName(),
           gId: googleUser.getBasicProfile().getId(),
@@ -157,13 +166,39 @@ export default {
           type: "googleRegister"
         };
         store.dispatch("registerUser", user).then(() => {
-          this.$emit('close')
-        })
+          this.$emit("close");
+        });
       } catch (error) {
         //on fail do something
         console.error(error);
         return null;
       }
+      
+    },
+    loginWithFacebook() {
+      FB.login(
+        response => {
+          if (response.authResponse) {
+
+            FB.api("/me", { fields: "first_name, last_name, email" }, user => {
+              const fbUser = {
+                name: user.first_name,
+                surname: user.last_name,
+                email: user.email,
+                facebookId: user.id,
+                accessToken: response.authResponse.accessToken,
+                type: "facebookRegister"
+              };
+              store.dispatch("registerUser", fbUser).then(() => {
+                this.$emit("close");
+              })
+            });
+            return;
+          }
+          console.log("login error");
+        },
+        { scope: "public_profile,email", enable_profile_selecto: true }
+      );
     }
   },
   watch: {
@@ -289,9 +324,15 @@ form {
     padding: 0.5rem 1rem;
   }
 }
-.googleLogin{
-  margin :6%;
+.googleLogin {
+  margin: 6%;
   height: 55px;
   cursor: pointer;
+}
+.socialLogin{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  margin-left: 2%;
 }
 </style>

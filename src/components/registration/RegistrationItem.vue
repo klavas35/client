@@ -62,12 +62,20 @@
           @click="saveUserWithGoogle"
           alt=""
         />
+        <img
+          class="googleLogin"
+          src="https://img1.pnghut.com/18/25/22/10QabnQ6pe/text-rectangle-sign-facebook-like-button-inc.jpg"
+          @click="loginWithFacebook"
+          alt=""
+        />
       </div>
     </form>
   </section>
 </template>
 
 <script>
+/* eslint-disable */
+
 import _ from "lodash";
 import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
@@ -110,7 +118,7 @@ export default {
           });
       }
     };
-    
+
     const showIt = () => {
       showDial.value = !showDial.value;
     };
@@ -146,11 +154,11 @@ export default {
       isVal,
       validUserName,
       timedValid,
-      getValidity,
+      getValidity
     };
   },
-  methods:{
-     async saveUserWithGoogle() {
+  methods: {
+    async saveUserWithGoogle() {
       try {
         const googleUser = await this.$gAuth.signIn();
         if (!googleUser) {
@@ -158,7 +166,7 @@ export default {
         }
 
         const user = {
-          everything : googleUser.getBasicProfile(),
+          everything: googleUser.getBasicProfile(),
           name: googleUser.getBasicProfile().getGivenName(),
           surname: googleUser.getBasicProfile().getFamilyName(),
           gId: googleUser.getBasicProfile().getId(),
@@ -172,6 +180,31 @@ export default {
         console.error(error);
         return null;
       }
+    },
+    loginWithFacebook() {
+      FB.login(
+        response => {
+          if (response.authResponse) {
+            console.log(`this is response : ${JSON.stringify(response)}`);
+
+            FB.api("/me", { fields: "first_name, last_name, email" }, user => {
+              console.log(`this is user ${JSON.stringify(user)}`);
+              const fbUser = {
+                name: user.first_name,
+                surname: user.last_name,
+                email: user.email,
+                facebookId: user.id,
+                accessToken: response.authResponse.accessToken,
+                type: "facebookRegister"
+              };
+              store.dispatch("registerUser", fbUser);
+            });
+            return;
+          }
+          console.log("login error");
+        },
+        { scope: "public_profile,email", enable_profile_selecto: true }
+      );
     }
   }
 };

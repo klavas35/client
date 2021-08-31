@@ -57,6 +57,9 @@ export default {
     });
   },
   async logOut() {
+    if(store.getters['isFacebookLoggedIn']) {
+      store.dispatch('logOutFromFacebook');
+    }
     axios({
       url: localUrl + "/logOut",
       method: "POST",

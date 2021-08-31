@@ -21,7 +21,6 @@ export default {
     facebookLoginMutation(state, payload) {
         if(payload) {
             state.facebookAccountLoggedIn=true
-            console.log('logged in with face');
             return;
         }
         state.facebookAccountLoggedIn = false
