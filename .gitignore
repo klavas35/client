@@ -2,7 +2,10 @@
 node_modules
 /dist
 
-
+.redis-connect.ps1
+redis-commander.sh
+.redis-commander.sh
+redis-connect.ps1
 # local env files
 .env.local
 .env.*.local
