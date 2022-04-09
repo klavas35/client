@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "jest"
   },
   "dependencies": {
     "@babel/preset-env": "^7.16.11",
@@ -43,6 +44,7 @@
     "@vue/cli-plugin-vuex": "^5.0.4",
     "@vue/cli-service": "^5.0.4",
     "@vue/compiler-sfc": "^3.1.5",
+    "@vue/test-utils": "^2.0.0-rc.19",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.2.4",
     "babel-plugin-transform-regenerator": "^6.26.0",
@@ -51,9 +53,11 @@
     "babel-preset-stage-0": "^6.24.1",
     "crypto-browserify": "^3.12.0",
     "eslint-plugin-vue": "^8.6.0",
+    "jest": "^27.5.1",
     "minimist": ">=1.2.6",
     "stream-browserify": "^3.0.0",
     "util": "^0.12.4",
+    "vue-jest": "^5.0.0-alpha.10",
     "webpack": "^5.72.0"
   },
   "resolutions": {
