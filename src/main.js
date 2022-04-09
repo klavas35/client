@@ -1,6 +1,11 @@
 /* eslint-disable */
-import './helpers/initFacebookSdk'
-import { createApp } from "vue";
+import './helpers/initFacebookSdk';
+import 'regenerator-runtime/runtime';
+import {
+  createApp
+} from "vue";
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
