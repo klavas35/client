@@ -2,11 +2,14 @@
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? "/client/" : "/",
+  publicPath: process.env.NODE_ENV === 'production' ?
+    '/' + process.env.CI_PROJECT_NAME + '/' : '/',
   transpileDependencies: [
     "@splidejs"
   ],
-};
+  publicPath: process.env.NODE_ENV === 'production' ?
+    '/' + process.env.CI_PROJECT_NAME + '/' : '/'
+}
 
 module.exports = {
   chainWebpack: (config) => {
