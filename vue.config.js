@@ -2,7 +2,7 @@
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? "/https://klavas35.github.io/client/" : "/",
+  publicPath: process.env.NODE_ENV === 'production' ? "/client/" : "/",
   transpileDependencies: [
     "@splidejs"
   ],

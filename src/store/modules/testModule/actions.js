@@ -32,15 +32,15 @@ export default {
     }
     if(payload.type ==='facebookRegister') {
       const facebookUser = {
-        name:payload.name,
-        surname:payload.surname,
-        email:payload.email,
-        facebookId:payload.facebookId,
-        type:payload.type,
-        idToken:payload.accessToken
-      }
-      context.commit('facebookLoginMutation', true)
-      JWTSign(facebookUser, 'register')
+        name: payload.name,
+        surname: payload.surname,
+        email: payload.email,
+        facebookId: payload.facebookId,
+        type: payload.type,
+        idToken: payload.accessToken
+      };
+      context.commit('facebookLoginMutation', true);
+      JWTSign(facebookUser, 'register');
     }
   },
   async isLogged(context) {
@@ -93,11 +93,11 @@ export default {
       });
   },
   logOutFromFacebook(context) {
-    FB.logout()
+    FB.logout();
     context.commit('facebookLoginMutation');
   },
   facebookUserLoggedIn(context,payload){
-    context.commit('facebookLoginMutation', payload)
+    context.commit('facebookLoginMutation', payload);
   }
 };
 
@@ -109,12 +109,12 @@ async function JWTSign(user, type) {
     async (err, token) => {
       if (err) {
         console.log(err);
-        return
+        return;
       } if(type === 'register') {
         await registerFunction(token);
-        return
+        return;
       } if (type === 'login') {
-        await loginFunction(token)
+        await loginFunction(token);
       }
     }
   );
