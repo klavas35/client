@@ -55,7 +55,7 @@
                   />
                   <img
                     class="googleLogin"
-                    src="https://img1.pnghut.com/18/25/22/10QabnQ6pe/text-rectangle-sign-facebook-like-button-inc.jpg"
+                    src="https://iconarchive.com/download/i82905/limav/flat-gradient-social/Facebook.ico"
                     @click="loginWithFacebook"
                     alt=""
                   />

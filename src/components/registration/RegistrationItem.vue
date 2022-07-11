@@ -64,7 +64,7 @@
         />
         <img
           class="googleLogin"
-          src="https://img1.pnghut.com/18/25/22/10QabnQ6pe/text-rectangle-sign-facebook-like-button-inc.jpg"
+          src="https://iconarchive.com/download/i82905/limav/flat-gradient-social/Facebook.ico"
           @click="loginWithFacebook"
           alt=""
         />
@@ -286,7 +286,7 @@ h3 {
 }
 .googleLogin {
   height: 35px;
-  margin: 3%;
+  margin: 1%;
   cursor: pointer;
 }
 </style>

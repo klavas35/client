@@ -82,6 +82,7 @@ button:active {
 .flat:active {
   text-decoration: yellowgreen;
   background-color: red;
+  color: white;
 }
 
 .outline:hover,

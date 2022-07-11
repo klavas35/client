@@ -147,6 +147,7 @@ async function loginFunction(token) {
     withCredentials: true
   })
     .then(async (response) => {
+      console.log(response);
       await store.dispatch("isLogged");
       if (response.data === "error") {
         const error = new Error(
