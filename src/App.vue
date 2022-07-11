@@ -14,6 +14,7 @@ export default {
   },
   setup() {},
   created() {
+    this.checkFacebook();
     this.checkAuth();
   },
   methods: {
@@ -21,6 +22,13 @@ export default {
       this.$store.dispatch("isLogged");
       this.$store.dispatch("getPosts");
     },
+    checkFacebook() {
+      // eslint-disable-next-line no-undef
+      FB.getLoginStatus(function(response) {
+    // eslint-disable-next-line no-undef
+    statusChangeCallback(response);
+});
+    }
   },
 };
 </script>

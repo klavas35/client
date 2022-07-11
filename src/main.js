@@ -1,5 +1,4 @@
 /* eslint-disable */
-import './helpers/initFacebookSdk';
 import 'regenerator-runtime/runtime';
 import {
   createApp
